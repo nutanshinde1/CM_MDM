@@ -86,3 +86,20 @@ INSERT IGNORE INTO food_items(category_id,name,price,description,popular,status)
  ((SELECT id FROM categories WHERE name='Snacks'),'Samosa',15,'Potato-filled pastry',TRUE,'AVAILABLE'),
  ((SELECT id FROM categories WHERE name='Snacks'),'French Fries',50,'Crispy salted fries',FALSE,'AVAILABLE'),
  ((SELECT id FROM categories WHERE name='Meals'),'Veg Biryani',90,'Vegetable biryani',TRUE,'AVAILABLE');
+
+-- Use the same real food photos as the demo menu for database-backed installs.
+-- Preserve any image already chosen by a cafeteria administrator.
+UPDATE food_items SET image = CASE name
+ WHEN 'Masala Dosa' THEN 'assets/images/food/masala-dosa.jpg'
+ WHEN 'Veg Sandwich' THEN 'assets/images/food/veg-sandwich.jpg'
+ WHEN 'Cheese Burger' THEN 'assets/images/food/cheese-burger.jpg'
+ WHEN 'Paneer Roll' THEN 'assets/images/food/paneer-roll.jpg'
+ WHEN 'Veg Pizza' THEN 'assets/images/food/veg-pizza.jpg'
+ WHEN 'Cold Coffee' THEN 'assets/images/food/cold-coffee.jpg'
+ WHEN 'Tea' THEN 'assets/images/food/tea.jpg'
+ WHEN 'Samosa' THEN 'assets/images/food/samosa.jpg'
+ WHEN 'French Fries' THEN 'assets/images/food/french-fries.jpg'
+ WHEN 'Veg Biryani' THEN 'assets/images/food/veg-biryani.jpg'
+ WHEN 'Veg Thali' THEN 'assets/images/food/veg-thali.jpg'
+ ELSE image END
+WHERE image IS NULL OR image = '';

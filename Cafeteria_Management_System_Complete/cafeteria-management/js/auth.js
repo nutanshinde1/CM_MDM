@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (PAGE === "signup") initSignup();
 });
 
-function initLogin() {
-  if (getCurrentUser()) { location.replace("menu.html"); return; }
+async function initLogin() {
+  if (await getCurrentUser()) { location.replace("menu.html"); return; }
   const form = document.getElementById("loginForm");
   const msgBox = document.getElementById("formMessage");
   const params = new URLSearchParams(location.search);
@@ -51,8 +51,8 @@ function initLogin() {
   });
 }
 
-function initSignup() {
-  if (getCurrentUser()) { location.replace("menu.html"); return; }
+async function initSignup() {
+  if (await getCurrentUser()) { location.replace("menu.html"); return; }
   const form = document.getElementById("signupForm");
   const msgBox = document.getElementById("formMessage");
 

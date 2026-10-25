@@ -23,8 +23,15 @@ const statusBadge = (s) => `<span class="badge rounded-pill ${BADGE_CLASS[s] || 
 
 /* ---------- Food image (photo if it exists, otherwise emoji tile) ---------- */
 function foodThumb(item, extraClass = "") {
-  const inner = item.image
-    ? `<img src="${ROOT}${esc(item.image)}" alt="${esc(item.name)}" loading="lazy" data-emoji="${esc(item.emoji || "🍽️")}">`
+  const bundledPhoto = typeof MOCK_DATA !== "undefined"
+    ? MOCK_DATA.foodItems.find((food) => Number(food.id) === Number(item.id))?.image
+    : "";
+  const image = bundledPhoto || item.image;
+  const imageSrc = /^(?:https?:|data:|blob:|\/)/i.test(image || "")
+    ? image
+    : `${ROOT}${image || ""}`;
+  const inner = image
+    ? `<img src="${esc(imageSrc)}" alt="${esc(item.name)}" loading="lazy" data-emoji="${esc(item.emoji || "🍽️")}">`
     : `<div class="food-emoji">${item.emoji || "🍽️"}</div>`;
   return `<div class="food-media ${extraClass}">${inner}</div>`;
 }
@@ -88,10 +95,10 @@ function requireAdmin() {
 }
 
 /* ---------- Customer navbar + footer ---------- */
-function renderNavbar() {
+async function renderNavbar() {
   const mount = document.getElementById("site-navbar");
   if (!mount) return;
-  const user = getCurrentUser();
+  const user = await getCurrentUser();
   const link = (href, label, key) => `<li class="nav-item"><a class="nav-link ${PAGE === key ? "active" : ""}" href="${ROOT}${href}">${label}</a></li>`;
   const account = user
     ? `<div class="dropdown">

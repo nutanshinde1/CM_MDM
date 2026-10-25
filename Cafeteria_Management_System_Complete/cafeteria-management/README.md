@@ -85,7 +85,7 @@ To switch: set `API_BASE_URL`, then replace each function body with `apiRequest(
 Later enhancements from the synopsis: QR-based ordering, mobile app, inventory management, real-time notifications, analytics, recommendations.
 
 ## Food photos
-Only coffee and cafeteria photos came with the original project, so other items show an emoji tile. To add a real photo, save it in `assets/images/food/` and set that item's `image` field in `js/mockData.js`, for example `image: "assets/images/food/masala-dosa.jpg"`. (If you change seed data on a machine that already opened the demo, click **Reset demo data** on the admin dashboard to reload it.)
+The demo menu uses locally bundled food photos in `assets/images/food/`, so they load without external image hosting. The SQL seed assigns these paths to database-backed menu items that do not already have an image. You can change a photo in the `image` field in `js/mockData.js` or the `food_items.image` database column.
 
 ## Credits
 The initial PHP/MySQL version of this project was taken from the public repository *cafeteria-management* by Sanika Dethe (reference [1] in the synopsis). This frontend was rebuilt with Bootstrap 5 for Review 2.
